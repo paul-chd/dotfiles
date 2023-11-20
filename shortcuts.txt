@@ -1,0 +1,27 @@
+Spotify = spotify.sh
+Discord = discord.sh
+Sound = pavucontrol
+
+output same as:
+xrandr --output HDMI-1 --auto --mode 1920x1080 --same-as eDP-1
+
+set output brightness:
+xrandr --output HDMI-0 --brightness .5
+
+get brightness:
+xrandr --verbose | grep -i brightness | cut -f2 -d ' ' | head -n1
+
+launch dunst (notify-send)
+
+volume information (get current volume):
+pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,'
+
+volume control:
+increase:
+pactl set-sink-volume @DEFAULT_SINK@ +10%
+decrease:
+pactl set-sink-volume @DEFAULT_SINK@ -10%
+mute sound:
+set-sink-mute @DEFAULT_SINK@ toggle
+mute mic:
+pactl set-source-mute @DEFAULT_SOURCE@ toggle
